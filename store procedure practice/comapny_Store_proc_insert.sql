@@ -16,6 +16,7 @@ companyTotalEmp int,
 Alter Proc spAddToCompanys
 @companyName varchar(50),
 @companyTotalEmp int,
+@Deptno int,
 @responseMessage NVARCHAR(250) output
 as
 begin 
@@ -23,8 +24,8 @@ begin
 
 	Begin try
 	Insert into tblCompanys 
-	Output Inserted.id,@companyName as CompanyName,@companyTotalEmp as TotalEmployees
-	Values(@companyName,@companyTotalEmp)
+	Output Inserted.id,@companyName as CompanyName,@companyTotalEmp as TotalEmployees,@Deptno as DepartmentNo
+	Values(@companyName,@companyTotalEmp,@Deptno)
 	Set @responseMessage = 'Success'
 	end try
 
@@ -37,7 +38,7 @@ end
 
 
 Declare @responseMessage Nvarchar(250) 
-EXEC spAddToCompanys @companyName= 'Daily Foods Industries',@companyTotalEmp = 5,@responseMessage = @responseMessage output
+EXEC spAddToCompanys @companyName= 'Shangrilla Foods Industries',@companyTotalEmp = 15,@Deptno = 9,@responseMessage = @responseMessage output
 	print @responseMessage ;
 
 
